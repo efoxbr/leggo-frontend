@@ -9,18 +9,9 @@ const filtro = {
     nomeProposicaoFilter: {
       'nomeProposicao': ''
     },
-    emPautaFilter: [
-      {
-        'tipo': 'Sim',
-        'status': true
-      }, {
-        'tipo': 'Não',
-        'status': true
-      }
-    ],
+    emPautaFilter: true,
     dateRef: new Date(),
-    energyOrder: 'desc',
-    energias: {}
+    energyOrder: 'desc'
   },
   mutations: {
     filtraNomeProposicao (state, nomeProposicao) {
@@ -34,9 +25,6 @@ const filtro = {
     },
     updateEnergyOrder (state, order) {
       state.energyOrder = order
-    },
-    updateEnergias (state, payload) {
-      state.energias[payload.id] = payload.energia
     },
     setFilter (state, payload) {
       // Se payload é no formato { filter, value }, seta filter como value,

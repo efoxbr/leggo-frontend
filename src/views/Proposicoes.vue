@@ -77,12 +77,7 @@ export default {
     checkPropMatchesFilter (prop) {
       return this.filter.filters.every(
         filter => this.filter.current[filter].includes(prop[filter])) &&
-        this.filter.emPautaFilter.some(
-          // TODO: usar nova estrutura do emPauta
-          options =>
-            ((options.tipo === 'Sim' && prop.em_pauta) ||
-              (options.tipo === 'Não' && !prop.em_pauta)) && options.status
-        ) &&
+        (this.filter.emPautaFilter ? prop.em_pauta: false) &&
         prop.apelido.toLowerCase().match(
           this.filter.nomeProposicaoFilter.nomeProposicao.toLowerCase())
     }

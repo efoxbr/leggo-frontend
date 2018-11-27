@@ -35,36 +35,22 @@
       </el-menu-item>
 
       <!-- Pauta -->
-      <el-submenu index="5">
-        <template slot="title">
-          <i class="el-icon-edit-outline"></i>
-          <span slot="title">Em pauta</span>
-        </template>
-        <el-menu-item
-          v-for="(opcao, i) in emPautaFilter"
-          @click="propagateClick"
-          :index="'1-' + (i+1)" :key="i">
-          <el-checkbox
-            @change="filtraEmPauta(emPautaFilter)"
-            v-model="opcao.status">
-            {{ opcao.tipo }}
-          </el-checkbox>
-        </el-menu-item>
-      </el-submenu>
+      <el-row>
+        Pauta
+        <option-botton :active="emPautaFilter" v-on:input="filtraEmPauta($event)">
+          Em Pauta
+        </option-botton>
+      </el-row>
 
-      <!-- Vários Filtros -->
-      <el-submenu v-for="(filterName, i) of filter.filters" :key="i" :index="filterName">
-        <template slot="title">
-          <i class="el-icon-edit-outline"></i>
-          <span slot="title">{{ $t(filterName) }}</span>
-        </template>
-        <el-checkbox-group v-model="self[filterName]">
-          <el-menu-item v-for="(opcao, j) in perFilterOptions[filterName]"
-                        :key="j" index="j" @click="propagateClick">
-            <el-checkbox :label="opcao">{{ $t(opcao) }}</el-checkbox>
-          </el-menu-item>
-        </el-checkbox-group>
-      </el-submenu>
+      <el-row v-for="(filterName, i) of filter.filters" :key="i" :index="filterName" >
+        <span slot="title">{{ $t(filterName) }}</span>
+        <option-botton v-for="(opcao, j) in perFilterOptions[filterName]"
+                      :key="j" index="j" v-on:input="filtraEmPauta($event)">
+          {{ $t(opcao) }}
+        </option-botton>
+      </el-row>
+      <!-- Vários Filtros
+       -->
     </el-menu-item-group>
   </el-menu>
 </template>
@@ -72,6 +58,7 @@
 <script>
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import PressureSort from '@/components/card/expanded/PressureSort'
+import OptionBotton from './OptionBotton'
 import store from '@/stores/store'
 
 function generateFilterModels () {
@@ -93,7 +80,8 @@ function generateFilterModels () {
 export default {
   name: 'FilterMenu',
   components: {
-    PressureSort
+    PressureSort,
+    OptionBotton
   },
   data () {
     let self = this
@@ -144,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+.el-menu {
+  background-color: black;
+}
+
 .el-input, .el-select {
     width: 200px !important;
 }
